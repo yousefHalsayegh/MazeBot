@@ -1,10 +1,14 @@
 from tokenize import String
 import pygame as pg
 from Maze import Maze
+from tabulate import tabulate
 
 class UI:
 
     BLACK = (0 ,0 ,0)
+    RED = (255, 0, 0)
+    GREEN = (0, 255, 0)
+    BLUE = (0, 0, 255)
     WHITE = (255, 255, 255)
     GREY = (200, 200, 200)
     (WIDTH, HEIGHT) = (600, 600)
@@ -28,6 +32,9 @@ class UI:
         self.exit = False
         
         self.start_menu()
+        
+        self.reset = pg.Surface((self.WIDTH, self.HEIGHT - 90))
+        self.reset.fill(self.WHITE)
 
     def start_menu(self):
 
@@ -39,12 +46,15 @@ class UI:
 
         self.window.blit(text, textRec)
 
+        #Creating the generate button 
         self.generate = self.create_button('Generate Maze', 45, 60, 100, 25)
 
+        #Creating buttons and fields for inputing coordinates 
         self.x_button = self.create_input_button('X:', 20, 30, 75, 25)
         self.y_button = self.create_input_button('Y:', 115, 30, 75, 25)
 
-        pg.draw.line(self.window, self.BLACK, (0, 90), (self.WIDTH, 90))
+        #Seperation line
+        pg.draw.line(self.window, self.BLACK, (0, 89), (self.WIDTH, 89))
 
     def create_button(self, string, x, y, w, h):
 
@@ -157,5 +167,41 @@ class UI:
             self.window.blit(text, textRec)
 
     def draw_maze(self, maze):
+        
+        #Reset 
+        self.window.blit(self.reset, (0,90))
+        
+        center = [30, 100]
 
+        for i in range(maze.height):
+            
+            for j in range(maze.width):
+                
+                wall = maze.get_cell(j, i).walls
+                if (j == 0 and i == 0):
+                    print(f'i:{i}, j:{j}')
+                    print(f'wall?{wall}')
+         
+                if wall['N'] == True:
+                    
+                    pg.draw.line(self.window, self.BLACK, (center[0] - 5, center[1] - 5), (center[0] + 5, center[1] - 5))
+                
+                if wall['S'] == True:
+                    
+                    pg.draw.line(self.window, self.RED, (center[0] - 5, center[1] + 5), (center[0] + 5, center[1] + 5))
+                
+                if wall['E'] == True:
+                    
+                    pg.draw.line(self.window, self.GREEN, (center[0] + 5, center[1] + 5), (center[0] + 5, center[1] - 5))
+                    
+                if wall['W'] == True:
+                    
+                    pg.draw.line(self.window, self.BLUE, (center[0] - 5, center[1] + 5), (center[0] - 5, center[1] + 5))
+                
+                center[0] += 10
+                
+            center[1] += 10
+            center[0] = 30
+            
+        print(maze.get_cell(0,0).walls)
         print(maze)
