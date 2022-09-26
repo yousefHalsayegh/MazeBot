@@ -170,38 +170,42 @@ class UI:
         
         #Reset 
         self.window.blit(self.reset, (0,90))
-        
-        center = [30, 100]
 
-        for i in range(maze.height):
+        #Finiding out the distance between each point
+        dx = self.WIDTH / self.nx
+        dy = (self.HEIGHT - 90) / self.ny
+
+        #midpoint for each poitn
+        midx = dx / 2
+        midy = dy / 2
+        
+        #center of each "block"
+        center = [midx, 90 + midy]
+
+        for y in range(maze.height):
             
-            for j in range(maze.width):
+            for x in range(maze.width):
                 
-                wall = maze.get_cell(j, i).walls
-                if (j == 0 and i == 0):
-                    print(f'i:{i}, j:{j}')
-                    print(f'wall?{wall}')
+                wall = maze.get_cell(x, y).walls
+                
          
-                if wall['N'] == True:
+                if wall['N'] == True or y == 0:
                     
-                    pg.draw.line(self.window, self.BLACK, (center[0] - 5, center[1] - 5), (center[0] + 5, center[1] - 5))
+                    pg.draw.line(self.window, self.BLACK, (center[0] - midx, center[1] - midy), (center[0] + midx, center[1] - midy))
                 
-                if wall['S'] == True:
+                if wall['S'] == True or y == self.ny:
                     
-                    pg.draw.line(self.window, self.RED, (center[0] - 5, center[1] + 5), (center[0] + 5, center[1] + 5))
+                    pg.draw.line(self.window, self.BLACK, (center[0] - midx, center[1] + midy), (center[0] + midx, center[1] + midy))
                 
-                if wall['E'] == True:
+                if wall['E'] == True or x == self.nx:
                     
-                    pg.draw.line(self.window, self.GREEN, (center[0] + 5, center[1] + 5), (center[0] + 5, center[1] - 5))
+                    pg.draw.line(self.window, self.BLACK, (center[0] + midx, center[1] + midy), (center[0] + midx, center[1] - midy))
                     
-                if wall['W'] == True:
+                if wall['W'] == True or x == 0:
                     
-                    pg.draw.line(self.window, self.BLUE, (center[0] - 5, center[1] + 5), (center[0] - 5, center[1] + 5))
+                    pg.draw.line(self.window, self.BLACK, (center[0] - midx, center[1] + midy), (center[0] - midx, center[1] - midy))
                 
-                center[0] += 10
+                center[0] += dx
                 
-            center[1] += 10
-            center[0] = 30
-            
-        print(maze.get_cell(0,0).walls)
-        print(maze)
+            center[1] += dy
+            center[0] = dx
