@@ -174,6 +174,7 @@ class UI:
         #Finiding out the distance between each point
         dx = self.WIDTH / self.nx
         dy = (self.HEIGHT - 90) / self.ny
+        
 
         #midpoint for each poitn
         midx = dx / 2
@@ -181,6 +182,13 @@ class UI:
         
         #center of each "block"
         center = [midx, 90 + midy]
+
+
+        
+        #Start block
+        pg.draw.rect(self.window, self.BLUE, [0, 90, dx - 5, dy - 5])
+        #End block
+        pg.draw.rect(self.window, self.RED, [(self.WIDTH - dx) + 5, (self.HEIGHT - dy + 5), dx - 5, dy - 5])
 
         for y in range(maze.height):
             
@@ -209,8 +217,3 @@ class UI:
                 
             center[1] += dy
             center[0] = midx
-
-        #Start block
-        pg.draw.rect(self.window, self.BLUE, [0, 90, dx, dy])
-        #End block
-        pg.draw.rect(self.window, self.RED, [(self.WIDTH - dx), (self.HEIGHT - dy), dx, dy])
