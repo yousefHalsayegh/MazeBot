@@ -209,3 +209,8 @@ class UI:
                 
             center[1] += dy
             center[0] = midx
+
+        #Start block
+        pg.draw.rect(self.window, self.BLUE, [0, 90, dx, dy])
+        #End block
+        pg.draw.rect(self.window, self.RED, [(self.WIDTH - dx), (self.HEIGHT - dy), dx, dy])
