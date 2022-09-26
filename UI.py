@@ -98,17 +98,16 @@ class UI:
 
         elif self.x_button.collidepoint(cord):
 
-           self.nx = self.input_text(self.x_button.x, self.x_button.y, self.x_button.w, self.x_button.h, self.x_button)
+           self.input_text(self.x_button.x, self.x_button.y, self.x_button.w, self.x_button.h, self.x_button, 0)
 
         elif self.y_button.collidepoint(cord):
 
-            self.ny = self.input_text(self.y_button.x, self.y_button.y, self.y_button.w, self.y_button.h, self.y_button)
+            self.input_text(self.y_button.x, self.y_button.y, self.y_button.w, self.y_button.h, self.y_button, 1)
 
-    def input_text(self, x, y, w, h, button):
+    def input_text(self, x, y, w, h, button, n):
 
         eraser = pg.Surface((w - 2, h - 2))
         eraser.fill(self.WHITE)
-        n = 0
 
         input = ''
 
@@ -129,13 +128,15 @@ class UI:
                     
                     elif event.key == pg.K_RETURN:
 
-                        if input == '':
-                            
-                            n = 5
+                        if n == 0:
+
+                            self.nx = int(input) 
+                            print(self.nx)
 
                         else:
 
-                            n = int(input) 
+                            self.ny = int(input) 
+                            print(self.ny)
 
                         done = True
                     
@@ -145,13 +146,15 @@ class UI:
 
                 elif event.type == pg.MOUSEBUTTONDOWN:
 
-                    if input == '':
+                    if n == 0:
 
-                        n = 5
+                        self.nx = int(input) 
+                        print(self.nx)
 
                     else:
 
-                        n = int(input) 
+                        self.ny = int(input) 
+                        print(self.ny)
 
                     done = True
 
@@ -162,8 +165,6 @@ class UI:
             textRec.center = button.center
             self.window.blit(eraser, (x + 1 , y + 1))
             self.window.blit(text, textRec)
-
-            return n
 
     def draw_maze(self, maze):
         
