@@ -18,7 +18,7 @@ class BFS:
             
             path.append((m.x,m.y))
             print(f'x:{m.x}, y:{m.y} , {m.walls}')
-            if m.x == len(maze.maze) and m.y == len(maze.maze[0]):
+            if m.x == len(maze.maze) - 1 and m.y == len(maze.maze[0]) - 1:
                 return path
             w = m.walls
             
