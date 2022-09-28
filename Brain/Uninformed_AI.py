@@ -18,6 +18,8 @@ class BFS:
             
             path.append((m.x,m.y))
             print(f'x:{m.x}, y:{m.y} , {m.walls}')
+            if m.x == 4 and m.y == 4:
+                return path
             w = m.walls
             
             if w['N'] == False and m.y != 0:

@@ -260,8 +260,6 @@ class App:
         
         clock = pg.time.Clock()
         
-        #center of each "block"
-        center = [self.midx, 90 + self.midy]
         
         prev_x = paths[0][0]
         prev_y = paths[0][1]
@@ -270,46 +268,25 @@ class App:
         
         if prev_x > 0:
             
-            pg.draw.rect(self.window, self.GREEN, [(center[0] - self.midx) + (x * self.dx), 
-                                                   (center[1] - self.midy), 
+            pg.draw.rect(self.window, self.GREEN, [(x * self.dx), 90, 
                                                     self.dx - 5, self.dy - 5])
         elif prev_y > 0:
             
-            pg.draw.rect(self.window, self.GREEN, [(center[0] - self.midx), 
-                                                   (center[1] - self.midy) + (y * self.dy), 
+            pg.draw.rect(self.window, self.GREEN, [0, 90 + (y * self.dy), 
                                                     self.dx - 5, self.dy - 5])
-            
-        clock.tick(1)
              
         
         for path in paths[1:]: 
             
-            
             x = path[0]
             y = path[1]
             
-            
-            if x != prev_x and y != prev_y:
                 
-                pg.draw.rect(self.window, self.GREEN, [(center[0] - self.midx) + (x * self.dx), 
-                                                   (center[1] - self.midy) + (y * self.dy), 
+            pg.draw.rect(self.window, self.GREEN, [ (x * self.dx), 90 + (y * self.dy), 
                                                     self.dx - 5, self.dy - 5])
                 
-            elif x != prev_x:
             
-                pg.draw.rect(self.window, self.GREEN, [(center[0] - self.midx) + (x * self.dx), 
-                                                   (center[1] - self.midy), 
-                                                    self.dx - 5, self.dy - 5])
-            elif y != prev_y:
-            
-                pg.draw.rect(self.window, self.GREEN, [(center[0] - self.midx), 
-                                                   (center[1] - self.midy) + (y * self.dy), 
-                                                    self.dx - 5, self.dy - 5])
-                
-            prev_x = x
-            prev_y = y
             clock.tick(1)
-            pg.display.update()
             
         
         
