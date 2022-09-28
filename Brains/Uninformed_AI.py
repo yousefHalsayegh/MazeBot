@@ -1,3 +1,5 @@
+from App.maze import maze 
+
 class BFS:
 
     def __init__(self) -> None:
