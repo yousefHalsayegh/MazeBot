@@ -1,7 +1,7 @@
 
 import pygame as pg
 from Maze import Maze
-from tabulate import tabulate
+from Brain import Uninformed_AI
 
 
 class App:
@@ -101,7 +101,7 @@ class App:
         
         return button
 
-    def button_press(self, cord, app):
+    def button_press(self, cord, game):
         
 
         if self.generate.collidepoint(cord):
@@ -126,8 +126,9 @@ class App:
             print("HELPPPPPPP")
             
             if self.generated:
+                print("hello")
                 
-                self.run("BFS", self.maze, app)
+                self.run("BFS", game)
             
             else:
                 
@@ -256,16 +257,13 @@ class App:
         
         center =  [self.midx, 90 + self.midy]
         
-        x = center[0] * (x + 1)
-        y = center[1] * (y + 1)
+        pg.draw.rect(self.window, self.BLUE, ([(center[0] - self.midx) * (x + 1), (center[1] - self.midy) * (y + 1),
+                                               self.dx - 5, self.dy - 5]))
         
-        pg.draw.rect(self.window, self.BLUE, ([x, y, self.dx - 5, self.dy - 5]))
-        
-    def run(self, type, maze, app):
-        
-        from Brain import Uninformed_AI
     
+    def run(self, type, game):
+
         if type == "BFS":
             bot = Uninformed_AI.BFS()
-            bot.start(maze, app)
+            bot.start(self.maze, game)
 
