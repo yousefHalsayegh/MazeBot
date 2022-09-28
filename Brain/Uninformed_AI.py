@@ -11,43 +11,43 @@ class BFS:
         
         self.visited.append(maze.get_cell(0,0))
         self.queue.append(maze.get_cell(0,0))
+        path = []
         
         while self.queue:
             m = self.queue.pop(0)
             
+            path.append((m.x,m.y))
             print(f'x:{m.x}, y:{m.y} , {m.walls}')
             w = m.walls
             
-            if w['N'] == True and m.y != 0:
+            if w['N'] == False and m.y != 0:
                 
                 if(maze.get_cell(m.x, m.y - 1) not in self.visited):
                 
                     self.queue.append(maze.get_cell(m.x, m.y - 1))
                     self.visited.append(maze.get_cell(m.x, m.y - 1))
-                    app.draw_path(m.x, m.y)
                 
-            if w['E'] == True and m.x != len(maze.maze) - 1:
+            if w['E'] == False and m.x != len(maze.maze) - 1:
                 
                 if(maze.get_cell(m.x + 1, m.y) not in self.visited):
                     
                     self.queue.append(maze.get_cell(m.x + 1, m.y))
                     self.visited.append(maze.get_cell(m.x + 1, m.y))
-                    app.draw_path(m.x, m.y)
                 
-            if w['S'] == True and m.y != len(maze.maze[0]) - 1:
+            if w['S'] == False and m.y != len(maze.maze[0]) - 1:
                 
                 if(maze.get_cell(m.x, m.y + 1) not in self.visited):
                     
                     self.queue.append(maze.get_cell(m.x, m.y + 1))
                     self.visited.append(maze.get_cell(m.x, m.y + 1))
-                    app.draw_path(m.x, m.y)
                 
-            if w['W'] == True and m.x != 0:
+            if w['W'] == False and m.x != 0:
                 
                 if(maze.get_cell(m.x - 1, m.y) not in self.visited):
                     self.queue.append(maze.get_cell(m.x - 1, m.y ))
-                    self.visited.append(maze.get_cell(m.x - 1, m.y))
-                    app.draw_path(m.x, m.y)
+                    self.visited.append(maze.get_cell(m.x - 1, m.y))    
+                    
+        return path
         
 
 class DFS:
