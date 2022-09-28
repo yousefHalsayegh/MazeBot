@@ -163,11 +163,17 @@ class App:
                         if n == 0:
 
                             self.nx = int(input) 
+                            if self.nx > 100:
+                                self.nx = 100
+                                input = '100'
                             print(self.nx)
 
                         else:
 
                             self.ny = int(input) 
+                            if self.ny > 100:
+                                self.ny = 100
+                                input = '100'
                             print(self.ny)
 
                         done = True
@@ -181,11 +187,17 @@ class App:
                     if n == 0:
 
                         self.nx = int(input) 
+                        if self.nx > 100:
+                            self.nx = 100
+                            input = '100'
                         print(self.nx)
 
                     else:
 
                         self.ny = int(input) 
+                        if self.ny > 100:
+                            self.ny = 100
+                            input = '100'
                         print(self.ny)
 
                     done = True
@@ -218,7 +230,7 @@ class App:
 
         
         #Start block
-        pg.draw.rect(self.window, self.BLUE, [0, 92, self.dx - 2, self.dy - 2])
+        pg.draw.rect(self.window, self.BLUE, [0, 90, self.dx - 2, self.dy - 2])
         #End block
         pg.draw.rect(self.window, self.RED, [(self.WIDTH - self.dx) + 2, (self.HEIGHT - self.dy + 2), self.dx - 2, self.dy - 2])
 
@@ -264,7 +276,7 @@ class App:
         prev_x = paths[0][0]
         prev_y = paths[0][1]
         #Start block
-        pg.draw.rect(self.window, self.GREEN, [0, 92, self.dx - 2, self.dy - 2])
+        pg.draw.rect(self.window, self.GREEN, [2, 92, self.dx - 2, self.dy - 2])
         
         if prev_x > 0:
             
@@ -283,8 +295,15 @@ class App:
             
                 
             clock.tick(10)
-            pg.draw.rect(self.window, self.GREEN, [ (x * self.dx) + 2, 92 + (y * self.dy), 
+            if x != prev_x:
+                pg.draw.rect(self.window, self.GREEN, [ (x * self.dx) + 2, 92 + (y * self.dy), 
                                                     self.dx - 2, self.dy - 2])
+            elif y != prev_y:
+                pg.draw.rect(self.window, self.GREEN, [ (x * self.dx) + 2, 92 + (y * self.dy), 
+                                                    self.dx - 2, self.dy - 2])
+                
+            x = prev_x
+            y = prev_y
             pg.display.update()
             
         
