@@ -1,9 +1,10 @@
-from tokenize import String
+
 import pygame as pg
-from App.Maze import Maze
+from Maze import Maze
 from tabulate import tabulate
 
-class UI:
+
+class App:
 
     BLACK = (0 ,0 ,0)
     RED = (255, 0, 0)
@@ -15,10 +16,18 @@ class UI:
 
     nx = 5
     ny = 5
+      
+    dx = 0
+    dy = 0
+    
+    midx = 0
+    midy = 0
     
     window = None 
 
     scene = None
+    
+    generated = False
 
     def __init__(self):
 
@@ -35,6 +44,8 @@ class UI:
         
         self.reset = pg.Surface((self.WIDTH, self.HEIGHT - 90))
         self.reset.fill(self.WHITE)
+        
+        self.maze =  Maze(self.nx, self.ny, 0, 0)
 
     def start_menu(self):
 
@@ -52,6 +63,9 @@ class UI:
         #Creating buttons and fields for inputing coordinates 
         self.x_button = self.create_input_button('X:', 20, 30, 75, 25)
         self.y_button = self.create_input_button('Y:', 115, 30, 75, 25)
+        
+        #Uninformed AI buttons 
+        self.BFS = self.create_button("BFS", 220, 30, 50, 25)
 
         #Seperation line
         pg.draw.line(self.window, self.BLACK, (0, 89), (self.WIDTH, 89))
@@ -87,14 +101,17 @@ class UI:
         
         return button
 
-    def button_press(self, cord):
+    def button_press(self, cord, app):
+        
 
         if self.generate.collidepoint(cord):
 
-            maze = Maze(self.nx, self.ny, 0, 0)
-            maze.generate()
+            self.maze = Maze(self.nx, self.ny, 0, 0)
+            self.maze.generate()
 
-            self.draw_maze(maze)
+            self.draw_maze(self.maze)
+            
+            self.generated = True
 
         elif self.x_button.collidepoint(cord):
 
@@ -103,6 +120,19 @@ class UI:
         elif self.y_button.collidepoint(cord):
 
             self.input_text(self.y_button.x, self.y_button.y, self.y_button.w, self.y_button.h, self.y_button, 1)
+            
+        elif self.BFS.collidepoint(cord):
+            
+            print("HELPPPPPPP")
+            
+            if self.generated:
+                
+                self.run("BFS", self.maze, app)
+            
+            else:
+                
+                print("Generate maze first")
+        
 
     def input_text(self, x, y, w, h, button, n):
 
@@ -172,23 +202,23 @@ class UI:
         self.window.blit(self.reset, (0,90))
 
         #Finiding out the distance between each point
-        dx = self.WIDTH / self.nx
-        dy = (self.HEIGHT - 90) / self.ny
+        self.dx = self.WIDTH / self.nx
+        self.dy = (self.HEIGHT - 90) / self.ny
         
 
         #midpoint for each poitn
-        midx = dx / 2
-        midy = dy / 2
+        self.midx = self.dx / 2
+        self.midy = self.dy / 2
         
         #center of each "block"
-        center = [midx, 90 + midy]
+        center = [self.midx, 90 + self.midy]
 
 
         
         #Start block
-        pg.draw.rect(self.window, self.BLUE, [0, 90, dx - 5, dy - 5])
+        pg.draw.rect(self.window, self.BLUE, [0, 90, self.dx - 5, self.dy - 5])
         #End block
-        pg.draw.rect(self.window, self.RED, [(self.WIDTH - dx) + 5, (self.HEIGHT - dy + 5), dx - 5, dy - 5])
+        pg.draw.rect(self.window, self.RED, [(self.WIDTH - self.dx) + 5, (self.HEIGHT - self.dy + 5), self.dx - 5, self.dy - 5])
 
         for y in range(maze.height):
             
@@ -199,21 +229,43 @@ class UI:
          
                 if wall['N'] == True or y == 0:
                     
-                    pg.draw.line(self.window, self.BLACK, (center[0] - midx, center[1] - midy), (center[0] + midx, center[1] - midy))
+                    pg.draw.line(self.window, self.BLACK, (center[0] - self.midx, center[1] - self.midy), 
+                                 (center[0] + self.midx, center[1] - self.midy))
                 
                 if wall['S'] == True or y == self.ny:
                     
-                    pg.draw.line(self.window, self.BLACK, (center[0] - midx, center[1] + midy), (center[0] + midx, center[1] + midy))
+                    pg.draw.line(self.window, self.BLACK, (center[0] - self.midx, center[1] + self.midy), 
+                                 (center[0] + self.midx, center[1] + self.midy))
                 
                 if wall['E'] == True or x == self.nx:
                     
-                    pg.draw.line(self.window, self.BLACK, (center[0] + midx, center[1] + midy), (center[0] + midx, center[1] - midy))
+                    pg.draw.line(self.window, self.BLACK, (center[0] + self.midx, center[1] + self.midy), 
+                                 (center[0] + self.midx, center[1] - self.midy))
                     
                 if wall['W'] == True or x == 0:
                     
-                    pg.draw.line(self.window, self.BLACK, (center[0] - midx, center[1] + midy), (center[0] - midx, center[1] - midy))
+                    pg.draw.line(self.window, self.BLACK, (center[0] - self.midx, center[1] + self.midy), 
+                                 (center[0] - self.midx, center[1] - self.midy))
                 
-                center[0] += dx
+                center[0] += self.dx
                 
-            center[1] += dy
-            center[0] = midx
+            center[1] += self.dy
+            center[0] = self.midx
+            
+    def draw_path(self, x, y):
+        
+        center =  [self.midx, 90 + self.midy]
+        
+        x = center[0] * (x + 1)
+        y = center[1] * (y + 1)
+        
+        pg.draw.rect(self.window, self.BLUE, ([x, y, self.dx - 5, self.dy - 5]))
+        
+    def run(self, type, maze, app):
+        
+        from Brain import Uninformed_AI
+    
+        if type == "BFS":
+            bot = Uninformed_AI.BFS()
+            bot.start(maze, app)
+

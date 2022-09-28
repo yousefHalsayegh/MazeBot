@@ -1,7 +1,8 @@
 import pygame as pg
-from App.UI import UI
+from App import App
 
-game = UI()
+game = App()
+
 
 
 while not game.exit:
@@ -14,6 +15,7 @@ while not game.exit:
 
         elif event.type == pg.MOUSEBUTTONDOWN:
     
-            game.button_press(event.pos)
+            game.button_press(event.pos, game)
 
     pg.display.update()
+    
