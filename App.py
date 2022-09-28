@@ -282,7 +282,7 @@ class App:
             y = path[1]
             
                 
-            clock.tick(30)
+            clock.tick(10)
             pg.draw.rect(self.window, self.GREEN, [ (x * self.dx), 90 + (y * self.dy), 
                                                     self.dx, self.dy])
             pg.display.update()
