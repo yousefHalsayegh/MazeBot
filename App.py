@@ -23,12 +23,13 @@ class App:
     
     midx = 0
     midy = 0
-    
+
     window = None 
 
     scene = None
     
     generated = False
+    rerun = False
 
     def __init__(self):
 
@@ -223,6 +224,8 @@ class App:
 
     def draw_maze(self, maze):
         
+        self.rerun = False
+        
         #Reset 
         self.window.blit(self.reset, (0,90))
 
@@ -332,6 +335,16 @@ class App:
         elif type == "DFS":
             bot = Uninformed_AI.DFS()
             path = bot.start(self.maze)
+        
+        if not self.rerun:
             
-        self.draw_path(path)
+            self.draw_path(path)
+            self.rerun = True
+            
+        else:
+            
+            self.draw_maze(self.maze)
+            time.sleep(1)
+            self.draw_path(path)
+            self.rerun = True
 

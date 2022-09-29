@@ -54,7 +54,7 @@ class BFS:
 
 class DFS:
 
-    def __init__(self) -> None:
+    def __init__(self):
         self.stack = []
         self.visited = []
         
@@ -66,7 +66,7 @@ class DFS:
         path = []
         
         while self.stack:
-            m = self.stack.pop(0)
+            m = self.stack.pop(-1)
             
             path.append((m.x,m.y))
             print(f'x:{m.x}, y:{m.y} , {m.walls}')
