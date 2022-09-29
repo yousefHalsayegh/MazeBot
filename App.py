@@ -67,6 +67,8 @@ class App:
         
         #Uninformed AI buttons 
         self.BFS = self.create_button("BFS", 220, 30, 50, 25)
+        
+        self.DFS = self.create_button("DFS", 280, 30, 50, 25)
 
         #Seperation line
         pg.draw.line(self.window, self.BLACK, (0, 89), (self.WIDTH, 89))
@@ -124,12 +126,21 @@ class App:
             
         elif self.BFS.collidepoint(cord):
             
-            print("HELPPPPPPP")
             
             if self.generated:
-                print("hello")
                 
                 self.run("BFS", game)
+            
+            else:
+                
+                print("Generate maze first")
+                
+        elif self.DFS.collidepoint(cord):
+            
+            
+            if self.generated:
+                
+                self.run("DFS", game)
             
             else:
                 
@@ -314,8 +325,13 @@ class App:
         path = []
 
         if type == "BFS":
+            
             bot = Uninformed_AI.BFS()
-            path = bot.start(self.maze, game)
+            path = bot.start(self.maze)
+            
+        elif type == "DFS":
+            bot = Uninformed_AI.DFS()
+            path = bot.start(self.maze)
             
         self.draw_path(path)
 
