@@ -71,6 +71,8 @@ class App:
         
         self.DFS = self.create_button("DFS", 280, 30, 50, 25)
 
+        self.DLS = self.create_button("DLS", 340, 30, 50, 25)
+
         #Seperation line
         pg.draw.line(self.window, self.BLACK, (0, 89), (self.WIDTH, 89))
 
@@ -146,7 +148,17 @@ class App:
             else:
                 
                 print("Generate maze first")
-        
+
+        elif self.DLS.collidepoint(cord):
+            
+            
+            if self.generated:
+                
+                self.run("DLS", game)
+            
+            else:
+                
+                print("Generate maze first")
 
     def input_text(self, x, y, w, h, button, n):
 
@@ -334,6 +346,10 @@ class App:
             
         elif type == "DFS":
             bot = Uninformed_AI.DFS()
+            path = bot.start(self.maze)
+
+        elif type == "DLS":
+            bot = Uninformed_AI.DLS()
             path = bot.start(self.maze)
         
         if not self.rerun:
