@@ -130,32 +130,34 @@ class App:
             self.input_text(self.y_button.x, self.y_button.y, self.y_button.w, self.y_button.h, self.y_button, 1)
             
         elif self.BFS.collidepoint(cord):
-            
-            
+
+
             if self.generated:
                 
                 self.run("BFS", game)
             
             else:
-                
+
                 print("Generate maze first")
                 
         elif self.DFS.collidepoint(cord):
-            
-            
+
+
             if self.generated:
-                
+
                 self.run("DFS", game)
-            
+
             else:
                 
                 print("Generate maze first")
 
         elif self.DLS.collidepoint(cord):
-            
-            
+            # needs taking dynamic limit
+            n =0
+            if n == 0:
+                print("enter limit first")
+
             if self.generated:
-                
                 self.run("DLS", game)
             
             else:
@@ -363,7 +365,7 @@ class App:
 
         elif type == "DLS":
             bot = Uninformed_AI.DLS()
-            path = bot.start(self.maze,1)
+            path = bot.start(self.maze,7)
             
         elif type == "IDS":
             bot = Uninformed_AI.IDS()

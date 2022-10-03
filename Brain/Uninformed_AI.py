@@ -21,7 +21,7 @@ class BFS:
 
             path.append((m.x, m.y))
             print(f'x:{m.x}, y:{m.y} , {m.walls}')
-            if m.x == 4 and m.y == 4:
+            if m.x == len(maze.maze)-1  and m.y == len(maze.maze)-1 :
                 return path
             w = m.walls
 
@@ -68,11 +68,12 @@ class DLS:
         self.stack.append(maze.get_cell(0, 0))
         path = []
         i = 0
-        while self.stack and 0 <= limit:
-            m = self.stack.pop(0)
+        while self.stack :
+            i += 1
+            m = self.stack.pop()
             path.append((m.x, m.y))
             print(f'x:{m.x}, y:{m.y} , {m.walls}')
-            if m.x == 4 and m.y == 4:
+            if (m.x == len(maze.maze)-1 and m.y == len(maze.maze)-1) or i > limit :
                 return path
             w = m.walls
 
