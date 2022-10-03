@@ -110,3 +110,8 @@ class DLS:
 class IDS:
     def __init__(self) -> None:
         pass
+
+class UCS:
+    
+    def __init__(self):
+        pass 
