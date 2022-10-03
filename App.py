@@ -161,7 +161,7 @@ class App:
             else:
                 
                 print("Generate maze first")
-                
+
         elif self.IDS.collidepoint(cord):
             
             
