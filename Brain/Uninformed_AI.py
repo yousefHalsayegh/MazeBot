@@ -108,7 +108,7 @@ class DLS:
         pass
 
 class IDS:
-    def __init__(self) -> None:
+    def __init__(self):
         pass
 
 class UCS:
