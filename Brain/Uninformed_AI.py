@@ -10,7 +10,7 @@ class BFS:
         self.queue = []
         self.visited = []
 
-    def start(self, maze, app):
+    def start(self, maze):
 
         self.visited.append(maze.get_cell(0, 0))
         self.queue.append(maze.get_cell(0, 0))
@@ -63,7 +63,7 @@ class DLS:
         self.stack = []
         self.visited = []
 
-    def start(self, maze, app, limit):
+    def start(self, maze, limit):
         self.visited.append(maze.get_cell(0, 0))
         self.stack.append(maze.get_cell(0, 0))
         path = []

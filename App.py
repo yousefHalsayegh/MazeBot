@@ -363,7 +363,7 @@ class App:
 
         elif type == "DLS":
             bot = Uninformed_AI.DLS()
-            path = bot.start(self.maze)
+            path = bot.start(self.maze,1)
             
         elif type == "IDS":
             bot = Uninformed_AI.IDS()
