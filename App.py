@@ -367,7 +367,7 @@ class App:
             
         elif type == "IDS":
             bot = Uninformed_AI.IDS()
-            path = bot.start(self.maze)
+            print(bot.start(self.maze))
         
         if not self.rerun:
             
